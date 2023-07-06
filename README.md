@@ -21,7 +21,7 @@ Este projeto foi desenvolvido como parte da disciplina DCC196 - Laboratório de 
 ### Instruções de Execução:
 1. Clone o repositório: 
 ```shell
-    git clone <https://github.com/IgorWestermann/bora>
+    git clone https://github.com/IgorWestermann/bora
 ```
 2. Instale as dependências:
 ```shell
