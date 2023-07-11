@@ -14,20 +14,27 @@ import {
 
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { SearchContext } from "../../context";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Inputs({ props }) {
-  const { toggleSearch, isSearching } = useContext(SearchContext);
+  const { toggleSearch, isSearching, fullParty, resetSearch } =
+  useContext(SearchContext);
+  const navigation = useNavigation();
+
+  const handleConfirm = async () => {
+    navigation.navigate("Chat");
+  };
 
   return (
     <Column
-      w={"90%"}
+      w={"95%"}
       borderWidth={1}
       borderColor={"primary.700"}
       borderBottomRadius={8}
       backgroundColor={"white"}
-      pt={10}
-      px={5}
-      pb={5}
+      pt={7}
+      px={2}
+      pb={2}
     >
       <StatusBar />
       <Text color={"primary.700"}>Origem</Text>
@@ -54,18 +61,35 @@ export default function Inputs({ props }) {
         }
       />
 
-      <Button
-        my={2}
-        backgroundColor={"primary.700"}
-        w={"100%"}
-        onPress={() => {
-          toggleSearch();
-        }}
-      >
-        <Text color={"white"}>
-          {isSearching ? "Cancelar" : "Encontrar Pessoas"}
-        </Text>
-      </Button>
+      {fullParty ? (
+        <Column w={"100%"} mt={2}>
+          <Button.Group w={"100%"} justifyContent={"space-evenly"}>
+            <Button
+              w={"40%"}
+              colorScheme={"error"}
+              onPress={() => resetSearch()}
+            >
+              Cancelar
+            </Button>
+            <Button w={"40%"} colorScheme={"success"} onPress={handleConfirm}>
+              Confirmar
+            </Button>
+          </Button.Group>
+        </Column>
+      ) : (
+        <Button
+          mt={2}
+          backgroundColor={"primary.700"}
+          w={"100%"}
+          onPress={() => {
+            toggleSearch();
+          }}
+        >
+          <Text color={"white"}>
+            {isSearching ? "Cancelar" : "Encontrar Pessoas"}
+          </Text>
+        </Button>
+      )}
     </Column>
   );
 }

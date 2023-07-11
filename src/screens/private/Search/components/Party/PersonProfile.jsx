@@ -14,8 +14,17 @@ import { SearchContext } from "../../context";
 export default function PersonProfile({ personData = undefined }) {
   const { isSearching } = useContext(SearchContext);
 
+  const getLabel = () =>{
+    if(personData != undefined ){
+        return personData.name
+    }else if(isSearching){
+        return "Buscando"
+    }else{
+        return "Convidar"
+    }
+  }
   return (
-    <Center flex={"1"} w={"20%"}>
+    <Center flex={"1"} w={"15%"}>
       {personData == undefined ? (
         <Center
           borderWidth={1}
@@ -23,7 +32,7 @@ export default function PersonProfile({ personData = undefined }) {
           borderColor={"primary.700"}
           backgroundColor={"primary.300"}
           opacity={50}
-          size={20}
+          size={'16'}
         >
           {isSearching ? (
             <Spinner />
@@ -40,12 +49,12 @@ export default function PersonProfile({ personData = undefined }) {
           borderWidth={1}
           borderRadius={50}
           borderColor={"primary.700"}
-          size={20}
+          size={'16'}
         >
-          <Avatar h={"100%"} w={"100%"} />
+          <Avatar source={personData.photo} h={"100%"} w={"100%"} />
         </Center>
       )}
-      <Text color={"primary.700"}>Buscando</Text>
+      <Text color={"primary.700"}>{getLabel()}</Text>
     </Center>
   );
 }
