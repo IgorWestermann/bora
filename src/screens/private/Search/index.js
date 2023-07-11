@@ -48,7 +48,7 @@ export default () => {
 
   return (
     <SearchProvider>
-      <VStack flex={1} justifyContent="center" alignItems="center">
+      <VStack flex={1} alignItems="center">
         <Inputs position={"absolute"} top={0} />
         {location == undefined ? null : (
           <MapView

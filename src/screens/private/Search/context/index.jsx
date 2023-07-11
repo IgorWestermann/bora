@@ -42,7 +42,6 @@ const mockUsers = [
     photo: require("../../../../../assets/fotos-perfil/naruto.jpg"),
   },
 ];
-
 export const SearchContext = createContext();
 
 const SearchProvider = ({ children }) => {
