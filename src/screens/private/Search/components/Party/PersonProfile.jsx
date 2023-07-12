@@ -16,7 +16,7 @@ export default function PersonProfile({ personData = undefined }) {
 
   const getLabel = () =>{
     if(personData != undefined ){
-        return personData.name
+        return personData.fullName
     }else if(isSearching){
         return "Buscando"
     }else{
@@ -51,7 +51,7 @@ export default function PersonProfile({ personData = undefined }) {
           borderColor={"primary.700"}
           size={'16'}
         >
-          <Avatar source={personData.photo} h={"100%"} w={"100%"} />
+          <Avatar source={personData.avatarUrl} h={"100%"} w={"100%"} />
         </Center>
       )}
       <Text color={"primary.700"}>{getLabel()}</Text>

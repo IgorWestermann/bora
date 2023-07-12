@@ -12,6 +12,7 @@ import {
   Avatar,
 } from "native-base";
 import { SearchContext } from "../../../../Providers/context";
+import { myProfile } from "../../../../Mocks/friends";
 
 const mensagens = [
   {
@@ -65,7 +66,7 @@ export function ChatView() {
                 space={2}
               >
                 <Text>{item.mensagem}</Text>
-                <Avatar />
+                <Avatar source={myProfile.avatarUrl}/>
               </Row>
             );
           } else {

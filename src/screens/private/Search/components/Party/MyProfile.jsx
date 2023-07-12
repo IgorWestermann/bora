@@ -8,7 +8,8 @@ import {
   VStack,
   Text,
 } from "native-base";
-import Icon from "react-native-vector-icons/FontAwesome5";
+
+import { myProfile } from "../../../../../Mocks/friends"; 
 
 
 export default function MyProfile({ personData = undefined }) {
@@ -22,7 +23,7 @@ export default function MyProfile({ personData = undefined }) {
         backgroundColor={"primary.300"}
         size={20}
       >
-        <Avatar w={"100%"} h={"100%"} source={perfilInfo.image} />
+        <Avatar w={"100%"} h={"100%"} source={myProfile.avatarUrl} />
       </Center>
       <Text color={"primary.700"}>Eu</Text>
     </Center>
