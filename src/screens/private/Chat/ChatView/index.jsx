@@ -1,108 +1,166 @@
-import React, { useContext } from "react";
+import React, { useContext, useMemo } from "react";
 import {
-  Center,
-  Divider,
-  FlatList,
-  IconButton,
-  Input,
-  Row,
-  Text,
-  Icon,
-  VStack,
-  Avatar,
+    Center,
+    Divider,
+    FlatList,
+    IconButton,
+    Input,
+    Row,
+    Text,
+    Icon,
+    VStack,
+    Avatar,
+    HStack,
+    Container,
 } from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
+
 import { SearchContext } from "../../../../Providers/context";
 import { myProfile } from "../../../../Mocks/friends";
-
-const mensagens = [
-  {
-    mensagem: "Olá, tudo bem?",
-    flag: 1,
-  },
-  {
-    mensagem: "Sim, estou bem. E você?",
-    flag: 2,
-  },
-  {
-    mensagem: "Estou ótimo! Obrigado por perguntar.",
-    flag: 3,
-  },
-  {
-    mensagem: "Que bom! Precisa de alguma ajuda?",
-    flag: 4,
-  },
-  {
-    mensagem: "Não, estou apenas fazendo um teste.",
-    flag: 1,
-  },
-];
+import { useState } from "react";
 
 export function ChatView() {
-  const { users } = useContext(SearchContext);
+    const { users } = useContext(SearchContext);
+    const [messageInput, setMessageInput] = useState("");
 
-  return (
-    <VStack flex={"1"} w="90%">
-      <Text color={"primary.700"}>Chat</Text>
-      <Divider my={1} />
-      <FlatList
-        borderColor={"primary.700"}
-        borderRadius={4}
-        borderWidth={1}
-        minH={"70%"}
-        my={1}
-        data={mensagens}
-        renderItem={({ item }) => {
-          if (item.flag == 1) {
-            return (
-              <Row
-                borderColor={"primary.700"}
-                backgroundColor={"primary.300"}
-                borderRadius={4}
-                borderWidth={1}
-                ml={"auto"}
-                p={2}
-                m={2}
-                alignItems={"center"}
-                space={2}
-              >
-                <Text>{item.mensagem}</Text>
-                <Avatar source={myProfile.avatarUrl}/>
-              </Row>
-            );
-          } else {
-            return (
-              <Row
-                borderColor={"primary.700"}
-                borderRadius={4}
-                borderWidth={1}
-                mr={"auto"}
-                p={2}
-                m={2}
-                alignItems={"center"}
-                space={2}
-              >
-                <Avatar source={users[item.flag]?.avatarUrl} />
-                <Text>{item.mensagem}</Text>
-              </Row>
-            );
-          }
-        }}
-      />
+    const handleSubmitMessage = () => {
+        if (messageInput.trim() !== "") {
+            const newMessage = {
+                id: -1,
+                mensagem: messageInput,
+            };
+            setMessageInput("");
+            mensagens.push(newMessage);
+        }
+    };
 
-      <Row w={"100%"} justifyContent={"space-between"}>
-        <Input
-          w={"80%"}
-          placeholder="digite sua mensagem..."
-          variant={"underlined"}
-        />
-        <IconButton
-          w={"10%"}
-          borderColor={"primary.700"}
-          borderRadius={4}
-          borderWidth={1}
-          icon={<Icon size={14} name={"chevron-left"} />}
-        />
-      </Row>
-    </VStack>
-  );
+    const mensagens = useMemo(
+        () => [
+            {
+                id: -1,
+                mensagem: "Vamos nos encontrar no Sunny!!",
+            },
+            {
+                id: 2,
+                mensagem:
+                    "Sunny??? Que tal nos encontrarmos no Ichiraku Ramen? Assim podemos aproveitar para comer antes de partir.",
+            },
+            {
+                id: 1,
+                mensagem:
+                    "Concordo. O Ichiraku é um bom ponto de encontro. Estarei lá.",
+            },
+            {
+                id: 0,
+                mensagem:
+                    "Perfeito! Também estarei no Ichiraku. Vejo vocês lá, pessoal!",
+            },
+            {
+                id: -1,
+                mensagem: "EU VOU SER O REI DOS PIRATAS!!!",
+            },
+        ],
+        []
+    );
+
+    const renderItem = ({ item }) => {
+        if (item.id === -1) {
+            return (
+                <Container width="80%" alignSelf="flex-end">
+                    <HStack
+                        alignItems="center"
+                        key={item.id}
+                        flexDirection="row-reverse"
+                        backgroundColor="primary.100"
+                        borderRadius={2}
+                        borderWidth={0.3}
+                        borderColor="primary.200"
+                        ml="auto"
+                        p={2}
+                        m={2}
+                        space={2}
+                    >
+                        <Avatar source={myProfile.avatarUrl} />
+                        <VStack>
+                            <Text fontWeight="bold" alignSelf="flex-end">
+                                Rei dos Piratas
+                            </Text>
+                            <Text>{item.mensagem}</Text>
+                        </VStack>
+                    </HStack>
+                </Container>
+            );
+        } else {
+            return (
+                <Container width="80%">
+                    <HStack
+                        alignItems="center"
+                        key={item.id}
+                        borderRadius={2}
+                        borderWidth={0.3}
+                        borderColor="primary.200"
+                        mr="auto"
+                        p={2}
+                        m={2}
+                        space={1}
+                    >
+                        <Avatar source={users[item.id]?.avatarUrl} />
+                        <VStack pl={2}>
+                            <Text fontWeight="bold">
+                                {users[item.id]?.fullName}
+                            </Text>
+                            <Text>{item.mensagem}</Text>
+                        </VStack>
+                    </HStack>
+                </Container>
+            );
+        }
+    };
+
+    return (
+        <VStack flex={1} w="95%">
+            <Text>Valor da corrida: R$ 10,00</Text>
+            <Divider my={1} />
+            <FlatList
+                borderColor="primary.700"
+                borderRadius={2}
+                borderWidth={1}
+                minH="80%"
+                my={2}
+                pr={2}
+                data={mensagens}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => String(index)}
+            />
+
+            <Row
+                pt={2}
+                backgroundColor="primary.50"
+                justifyContent="space-between"
+            >
+                <Input
+                    w="80%"
+                    pl={2}
+                    placeholder="Digite sua mensagem..."
+                    variant="underlined"
+                    value={messageInput}
+                    onChangeText={setMessageInput}
+                />
+                <IconButton
+                    w="15%"
+                    borderColor="primary.200"
+                    borderRadius={2}
+                    borderWidth={0.5}
+                    onPress={handleSubmitMessage}
+                    icon={
+                        <Icon
+                            size="6"
+                            color="primary.400"
+                            as={<MaterialIcons name="send" />}
+                        />
+                    }
+                />
+            </Row>
+        </VStack>
+    );
 }

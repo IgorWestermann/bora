@@ -1,77 +1,76 @@
 import React, { useEffect, useState } from "react";
-import { VStack, Text, ZStack } from "native-base";
+import { VStack } from "native-base";
 import {
-  requestForegroundPermissionsAsync,
-  getCurrentPositionAsync,
-  watchPositionAsync,
-  LocationAccuracy,
+    requestForegroundPermissionsAsync,
+    getCurrentPositionAsync,
+    watchPositionAsync,
+    LocationAccuracy,
 } from "expo-location";
-import MapView, { Marker } from "react-native-maps";
+import MapView from "react-native-maps";
 
 import Inputs from "./components/Inputs";
 import Party from "./components/Party";
 
 export default () => {
-  const [location, setLocation] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+    const [origin, setOrigin] = useState(null);
+    const [destination, setDestination] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    requestPermission();
-  }, []);
+    useEffect(() => {
+        const requestPermission = async () => {
+            const options = await requestForegroundPermissionsAsync();
 
-  useEffect(() => {
-    watchPositionAsync(
-      {
-        accuracy: LocationAccuracy.High,
-        timeInterval: 10000,
-        distanceInterval: 5,
-      },
-      (res) => {
-        //console.log("res callback ", res);
-        setLocation(res);
-      }
+            if (options.granted) {
+                const currentLocation = await getCurrentPositionAsync();
+                setOrigin(currentLocation);
+                setIsLoading(false);
+            }
+        };
+
+        requestPermission();
+    }, []);
+
+    useEffect(() => {
+        const positionOptions = {
+            accuracy: LocationAccuracy.High,
+            timeInterval: 5000,
+            distanceInterval: 5,
+        };
+
+        const positionCallback = (res) => {
+            setOrigin(res);
+        };
+
+        const watchPosition = watchPositionAsync(
+            positionOptions,
+            positionCallback
+        );
+
+        return () => {
+            watchPosition.remove();
+        };
+    }, []);
+
+    return (
+        <VStack flex={1} alignItems="center">
+            <Inputs top={0} />
+            {origin ? (
+                <MapView
+                    style={{
+                        flex: 1,
+                        width: "100%",
+                    }}
+                    showsUserLocation={true}
+                    initialRegion={{
+                        latitude: origin.coords.latitude,
+                        longitude: origin.coords.longitude,
+                        latitudeDelta: 0.003,
+                        longitudeDelta: 0.003,
+                    }}
+                />
+            ) : null}
+
+            <Party mx={2} position={"absolute"} bottom={4} />
+        </VStack>
     );
-  });
-
-  const requestPermission = async () => {
-    const options = await requestForegroundPermissionsAsync();
-
-    //console.log("options ", options);
-
-    if (options.granted) {
-      const currentLocation = await getCurrentPositionAsync();
-      //console.log("currentLocation ", currentLocation);
-      setLocation(currentLocation);
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <VStack flex={1} alignItems="center">
-      <Inputs position={"absolute"} top={0} />
-      {location == undefined ? null : (
-        <MapView
-          style={{
-            flex: 1,
-            width: "100%",
-          }}
-          initialRegion={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.05,
-            longitudeDelta: 0.05,
-          }}
-        >
-          <Marker
-            coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-          />
-        </MapView>
-      )}
-
-      <Party mx={2} position={"absolute"} bottom={4} />
-    </VStack>
-  );
 };
