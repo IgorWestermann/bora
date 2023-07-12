@@ -6,10 +6,9 @@ import { ChatView } from "./ChatView";
 
 export default () => {
   return (
-    <VStack flex={1} alignItems="center">
+    <VStack flex={1} pt={20} alignItems="center">
       <Text>Seu time foi montado!</Text>
       <Party />
-      <Inputs />
       <ChatView />
     </VStack>
   );

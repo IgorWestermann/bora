@@ -9,15 +9,13 @@ import {
   Text,
 } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { SearchContext } from "../../context";
 
 const perfilInfo = {
-  image: require("../../../../../../assets/fotos-perfil/naruto.jpg"),
+  image: require("../../../../../Mocks/fotos-perfil/naruto.jpg"),
   name: "Naruto",
 };
 
 export default function MyProfile({ personData = undefined }) {
-  const { isSearching } = useContext(SearchContext);
 
   return (
     <Center flex={"1"} w={"20%"}>

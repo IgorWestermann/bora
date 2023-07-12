@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Column, Row, VStack, Button } from "native-base";
 import PersonProfile from "./PersonProfile";
 import MyProfile from "./MyProfile";
-import { SearchContext } from "../../context";
+import { SearchContext } from "../../../../../Providers/context";
 
 export default function Party({ ...props }) {
   const { users, fullParty } = useContext(SearchContext);

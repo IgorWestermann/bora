@@ -10,7 +10,6 @@ import MapView, { Marker } from "react-native-maps";
 
 import Inputs from "./components/Inputs";
 import Party from "./components/Party";
-import SearchProvider from "./context";
 
 export default () => {
   const [location, setLocation] = useState(undefined);
@@ -29,6 +28,7 @@ export default () => {
       },
       (res) => {
         //console.log("res callback ", res);
+        setLocation(res);
       }
     );
   });
@@ -47,33 +47,31 @@ export default () => {
   };
 
   return (
-    <SearchProvider>
-      <VStack flex={1} alignItems="center">
-        <Inputs position={"absolute"} top={0} />
-        {location == undefined ? null : (
-          <MapView
-            style={{
-              flex: 1,
-              width: "100%",
-            }}
-            initialRegion={{
+    <VStack flex={1} alignItems="center">
+      <Inputs position={"absolute"} top={0} />
+      {location == undefined ? null : (
+        <MapView
+          style={{
+            flex: 1,
+            width: "100%",
+          }}
+          initialRegion={{
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
+          }}
+        >
+          <Marker
+            coordinate={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
-              latitudeDelta: 0.05,
-              longitudeDelta: 0.05,
             }}
-          >
-            <Marker
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-            />
-          </MapView>
-        )}
+          />
+        </MapView>
+      )}
 
-        <Party mx={2} position={"absolute"} bottom={4} />
-      </VStack>
-    </SearchProvider>
+      <Party mx={2} position={"absolute"} bottom={4} />
+    </VStack>
   );
 };

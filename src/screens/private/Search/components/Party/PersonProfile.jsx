@@ -9,7 +9,7 @@ import {
   Text,
 } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome5";
-import { SearchContext } from "../../context";
+import { SearchContext } from "../../../../../Providers/context";
 
 export default function PersonProfile({ personData = undefined }) {
   const { isSearching } = useContext(SearchContext);

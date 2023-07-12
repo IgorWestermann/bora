@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Search from "../../../screens/private/Search";
 import Chat from "../../../screens/private/Chat";
+import { SearchProvider } from "../../../Providers/context";
 
 const Stack = createNativeStackNavigator();
 
