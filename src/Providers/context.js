@@ -1,6 +1,8 @@
 /* eslint-disable prefer-destructuring */
 import React, { createContext, useEffect, useRef, useState } from "react";
 
+import { friends } from "../Mocks/friends";
+
 export const Context = createContext();
 
 export const ContextProvider = ({ children }) => {
@@ -30,48 +32,7 @@ export const ContextProvider = ({ children }) => {
   );
 };
 
-const mockUsers = [
-  {
-    name: "Deidara",
-    photo: require("../Mocks/fotos-perfil/deidara.png"),
-  },
-  {
-    name: "Gaara",
-    photo: require("../Mocks/fotos-perfil/gaara.jpeg"),
-  },
-  {
-    name: "Hinata",
-    photo: require("../Mocks/fotos-perfil/hinata.jpeg"),
-  },
-  {
-    name: "Ino",
-    photo: require("../Mocks/fotos-perfil/ino.jpeg"),
-  },
-  {
-    name: "Rock Lee",
-    photo: require("../Mocks/fotos-perfil/rocklee.jpg"),
-  },
-  {
-    name: "Sasuke",
-    photo: require("../Mocks/fotos-perfil/sasuke.jpeg"),
-  },
-  {
-    name: "Shikamaru",
-    photo: require("../Mocks/fotos-perfil/shikamaru.jpg"),
-  },
-  {
-    name: "Itachi",
-    photo: require("../Mocks/fotos-perfil/itachi.jpg"),
-  },
-  {
-    name: "Pain",
-    photo: require("../Mocks/fotos-perfil/pain.jpeg"),
-  },
-  {
-    name: "Naruto",
-    photo: require("../Mocks/fotos-perfil/naruto.jpg"),
-  },
-];
+const mockUsers = [...friends];
 
 const arrayRandomElement = (array) => {
   //console.log("array ", array);
@@ -142,6 +103,9 @@ export const SearchProvider = ({ children }) => {
   };
 
   useEffect(() => {
+
+    console.log('1')
+
     if (isSearching) {
       let availableUsers = [...mockUsers];
       getRandomUsers(availableUsers);

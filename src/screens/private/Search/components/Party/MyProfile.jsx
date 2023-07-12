@@ -10,10 +10,6 @@ import {
 } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
-const perfilInfo = {
-  image: require("../../../../../Mocks/fotos-perfil/naruto.jpg"),
-  name: "Naruto",
-};
 
 export default function MyProfile({ personData = undefined }) {
 
