@@ -130,7 +130,7 @@ export default ({ navigation, ...rest }) => {
                             size="xl"
                         />
                         <Image
-                            source={require("../../../../assets/luffymeat.jpg")}
+                            source={require("../../../../assets/zorao.jpg")}
                             alt="Alternate Text"
                             size="xl"
                         />

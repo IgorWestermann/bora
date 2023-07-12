@@ -93,10 +93,10 @@ export const friends = [
 
 export const myProfile = {
     id: "0",
-    fullName: "Luffy",
-    avatarUrl: require("../../assets/fotos-perfil/luffy.jpg"),
+    fullName: "Zoro",
+    avatarUrl: require("../../assets/fotos-perfil/zoro.jpg"),
     description:
-        "Eu sou o capitão dos Piratas do Chapéu de Palha e estou em busca do maior tesouro do mundo, o One Piece. Com o poder da Gomu Gomu no Mi, sou capaz de esticar meu corpo como borracha e tenho habilidades de combate excepcionais. Aventureiro, valente e sempre com um sorriso no rosto, estou determinado a realizar meus sonhos e proteger meus amigos",
+        "O espadachim dos Chapéus de Palha, segundo em comando e acima do Sanji. Meu objetivo é me tornar o maior espadachim do mundo!",
     commonFriends: ["1"],
     comment: "Ótimo papo!",
 };
