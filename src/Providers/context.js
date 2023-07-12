@@ -7,12 +7,19 @@ export const Context = createContext();
 export const ContextProvider = ({ children }) => {
     const [isLogged, setIsLogged] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
+    const [initializing, setInitializing] = useState(true);
+
+    setTimeout(() => {
+        setInitializing(false);
+    }, 3000);
 
     const contextValue = {
         isLogged,
         setIsLogged,
         isConnected,
         setIsConnected,
+        initializing,
+        setInitializing,
     };
 
     return <Context.Provider value={contextValue}>{children}</Context.Provider>;
