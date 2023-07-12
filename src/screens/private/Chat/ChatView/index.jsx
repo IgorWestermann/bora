@@ -38,12 +38,12 @@ export function ChatView() {
         () => [
             {
                 id: -1,
-                mensagem: "Vamos nos encontrar no Sunny!!",
+                mensagem: "Onde tá o Luffy???",
             },
             {
                 id: 2,
                 mensagem:
-                    "Sunny??? Que tal nos encontrarmos no Ichiraku Ramen? Assim podemos aproveitar para comer antes de partir.",
+                    "Luffy??? Que tal nos encontrarmos no Ichiraku Ramen? Assim podemos aproveitar para comer antes de partir.",
             },
             {
                 id: 1,
@@ -57,7 +57,7 @@ export function ChatView() {
             },
             {
                 id: -1,
-                mensagem: "EU VOU SER O REI DOS PIRATAS!!!",
+                mensagem: "Acho que me perdi de novo",
             },
         ],
         []
