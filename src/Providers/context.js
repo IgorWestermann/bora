@@ -1,6 +1,4 @@
-/* eslint-disable prefer-destructuring */
 import React, { createContext, useEffect, useRef, useState } from "react";
-import memoizeOne from "memoize-one";
 
 import { friends } from "../Mocks/friends";
 
@@ -10,34 +8,29 @@ export const ContextProvider = ({ children }) => {
     const [isLogged, setIsLogged] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
 
-    return (
-        <Context.Provider
-            value={{
-                isLogged,
-                setIsLogged,
-                isConnected,
-                setIsConnected,
-            }}
-        >
-            {children}
-        </Context.Provider>
-    );
+    const contextValue = {
+        isLogged,
+        setIsLogged,
+        isConnected,
+        setIsConnected,
+    };
+
+    return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
 const arrayRandomElement = (array) => {
-    let random = Math.floor(Math.random() * array.length + 1);
-    if (random >= array.length) random = array.length - 1;
-    const element = array[random];
-    array.splice(random, 1);
+    const random = Math.floor(Math.random() * array.length);
+    const element = array.splice(random, 1)[0];
     return element;
 };
 
 const fetchUser = (usersArr) => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         const resolveFetch = (usersArr) => {
-            resolve(arrayRandomElement(usersArr));
+            const element = arrayRandomElement(usersArr);
+            resolve(element);
         };
-        const duration = Math.floor(Math.random() * 1000);
+        const duration = Math.floor(Math.random() * 3000);
         setTimeout(resolveFetch, duration, usersArr);
     });
 };
@@ -70,7 +63,7 @@ export const SearchProvider = ({ children }) => {
     const getRandomUsers = async (availableUsers) => {
         if (!lock.current) {
             const newUser = await fetchUser(availableUsers);
-            counter.current = counter.current + 1;
+            counter.current += 1;
             setUsers((prevUsers) => [...prevUsers, newUser]);
         } else {
             resetSearch();
